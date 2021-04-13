@@ -1,4 +1,4 @@
-#run(`clear`);
+println("Task 1-1");
 x = 0.29;
 y = 3.7;
 z = -1.0;

@@ -1,8 +1,7 @@
-println("Task 1-2 Variant 14");
-
-print("Input the boat's velocity = ");
+println("Task 1-2 Variant 14 ");
+println("Input the boat's velocity = ");
 str = readline();
-velocity_boat = tryparse(Float64, str);
+velocity_boat = tryparse(1, str);
 print("Input the river's velocity = ");
 str = readline();
 velocity_river = tryparse(Float64, str);
