@@ -14,7 +14,7 @@ println("Task 2-1. Variant 16");
         figure = Shape(user_input);
     catch
         println("You entered wrong value");
-        exit(1)
+        quit()
     end;
         #Get rectabgle area
     if (figure == rectangle::Shape)
