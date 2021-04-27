@@ -1,21 +1,19 @@
-include("valid_double_parse.jl");
+include("read_double.jl");
+include("read_int.jl")
+include("get_triangle_area.jl");
+include("get_rectangle_area.jl");
+include("is_triangle_exists.jl");
+include("is_rectangle_exists.jl")
 
-println("Task 2-1");
-println("Choose figure for area calculation: reactangle = 0, triangle = 1");
-str = readline();
-figure = tryparse(Int8, str);
-
+println("Task 2-1. Variant 16");
+figure = read_int("Choose figure for area calculation: reactangle = 0, triangle = 1");
     #Get rectabgle area
 if (figure == 0)
-    println("Input length value = ");
-    str = readline();
-    length = valid_double_parse(str);
-    println("Input width value = ");
-    str = readline();
-    width = valid_double_parse(str);
+    length = read_double("Input length value = ");
+    width = read_double("Input width value = ");
 
-    if (length != nothing && width != nothing)
-        area = length * width;
+    if (is_rectangle_exists(length, width))
+        area = get_rectangle_area(length, width);
         println("Rectangle area is $area");
     else
         println("Error in input data");
@@ -23,19 +21,12 @@ if (figure == 0)
 
     #Get triangle area
 elseif (figure == 1)
-    println("Input first side = ");
-    str = readline();
-    a = valid_double_parse(str);
-    println("Input second side = ");
-    str = readline();
-    b = valid_double_parse(str);
-    println("Input third side = ");
-    str = readline();
-    c = valid_double_parse(str);
+    a = read_double("Input first side = ");
+    b = read_double("Input second side = ");
+    c = read_double("Input third side = ");
 
-    if (a != nothing && b != nothing && c!= nothing)
-        p = (a + b + c)/ 2;
-        area = sqrt(p * (p - a) * (p - b) * (p - c));
+    if is_triangle_exists(a, b, c)
+        area = get_triangle_area(a, b, c);
         println("Triangle area is $area");
     else
         println("Error in input data");
