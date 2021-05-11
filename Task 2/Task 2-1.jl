@@ -6,40 +6,48 @@ include("is_triangle_exists.jl");
 include("is_rectangle_exists.jl");
 
 println("Task 2-1. Variant 16");
-# Define enum type
-@enum Shape rectangle = 0  triangle = 1
 
-    user_input = read_int("Choose figure for area calculation: rectangle = 0, triangle = 1");
+# Define enum type
+@enum Shape rectangle = 1  triangle = 2
+
+    user_input = read_int("Выберете фигуру:"
+        * " прямоугольник = $(Int(rectangle::Shape)),"
+        * " треугольник = $(Int(triangle::Shape))");
     try
         figure = Shape(user_input);
-    catch
-        println("You entered wrong value");
-        quit()
-    end;
-        #Get rectabgle area
-    if (figure == rectangle::Shape)
-        length = read_double("Input length value = ");
-        width = read_double("Input width value = ");
 
-        if (is_rectangle_exists(length, width))
-            area = get_rectangle_area(length, width);
-            println("Rectangle area is $area");
-        else
-            println("Error in input data");
-        end;
+        #Get rectabgle area
+        if (figure == rectangle::Shape)
+            length = read_double("Введите значение длины = ");
+            width  = read_double("Введите значение ширины = ");
+
+            if (is_rectangle_exists(length, width))
+                area = get_rectangle_area(length, width);
+                println("Площадь прямоугольника =  $area");
+            else
+                throw(
+                    ArgumentError("Ошибка при вводе данных."
+                        * " Прямоугольник с такими длинами сторон не существует."));
+            end;
 
         #Get triangle area
-    elseif (figure == triangle::Shape)
-        a = read_double("Input first side = ");
-        b = read_double("Input second side = ");
-        c = read_double("Input third side = ");
+        else (figure == triangle::Shape)
+            a = read_double("Введите первую сторону = ");
+            b = read_double("Введите вторую сторону = ");
+            c = read_double("Введите третью сторону = ");
 
-        if is_triangle_exists(a, b, c)
-            area = get_triangle_area(a, b, c);
-            println("Triangle area is $area");
-        else
-            println("Error in input data");
+            if is_triangle_exists(a, b, c)
+                area = get_triangle_area(a, b, c);
+                println("Площадь треуглника =  $area");
+            else
+                throw(
+                    ArgumentError("Ошибка при вводе данных"
+                        * " Прямоугольник с такими длинами сторон не существует."));
+            end;
         end;
-    else
-        println("Error in input data");
+    catch e
+        println("В процессе исполнения программы произошла внештатная ситуация:");
+        if isa(e, ArgumentError)
+            println(e.msg)
+        end;
     end;
