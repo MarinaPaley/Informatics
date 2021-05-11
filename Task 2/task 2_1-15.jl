@@ -2,29 +2,37 @@ include("add.jl");
 include("sub.jl");
 include("avg.jl");
 include("input_int.jl");
-include("input_float.jl");
 include("is_value_correct.jl")
+
+# Define enum type
+@enum ArithmeticOperation add_op = 1 sub_op = 2 avg_op = 3
 
 # input data
 choice = input_int("Введите число, соответствующее выбору:"*
-                      " 1 - сумма, 2 - разность, 3 - среднее арифметическое");
-x = input_float("Введите первое число");
-y = input_float("Введите второе число");
-# checking for correction data
-if is_value_correct(choice) && is_value_correct(x) && is_value_correct(y)
-# case choice for function
-    if choice == 1
-        additional = add(x,y);
-        println(" x = $x, y = $y, сумма = $additional");
-    elseif choice == 2
-        substaction = sub(x, y);
-        println(" x = $x, y = $y, разность = $substaction");
-    elseif choice == 3
-        average = avg(x, y);
-        println(" x = $x, y = $y, среднее арифметическое = $average");
-    else
-        println("Нет функции для введенного выбора");
+                   " 1 - сумма, 2 - разность, 3 - среднее арифметическое");
+try
+    action = ArithmeticOperation(choice);
+
+    local x = input_int("Введите первое число");
+    local y = input_int("Введите второе число");
+    # checking for correction data
+    if !is_value_correct(x) || !is_value_correct(y)
+        println("Ошибка при вводе чисел");
+        quit()
     end;
-else
-    println("Неправильные данные. Введено не число");
+    # case choice for function
+    if action == add_op::ArithmeticOperation
+        result = add(x, y);
+        println(" x = $x, y = $y, сумма = $result");
+    elseif action == sub_op::ArithmeticOperation
+        result = sub(x, y);
+        println(" x = $x, y = $y, разность = $result");
+    else action == avg_op::ArithmeticOperation
+        result = avg(x, y);
+        println(" x = $x, y = $y, среднее арифметическое = $result");
+    end;
+
+catch
+    println("Ошибка при вводе выбора");
+    quit()
 end;
