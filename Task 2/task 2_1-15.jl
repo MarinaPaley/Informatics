@@ -9,7 +9,10 @@ include("is_value_correct.jl")
 
 # input data
 choice = input_int("Введите число, соответствующее выбору:"*
-                   " 1 - сумма, 2 - разность, 3 - среднее арифметическое");
+                   " $(Int(add_op::ArithmeticOperation)) - сумма"*
+                   " $(Int(sub_op::ArithmeticOperation))  - разность"*
+                   " $(Int(avg_op::ArithmeticOperation))  - среднее арифметическое");
+
 try
     action = ArithmeticOperation(choice);
 
@@ -17,22 +20,24 @@ try
     local y = input_int("Введите второе число");
     # checking for correction data
     if !is_value_correct(x) || !is_value_correct(y)
-        println("Ошибка при вводе чисел");
-        quit()
+        throw(ArgumentError("Ошибка при вводе чисел"));
     end;
     # case choice for function
     if action == add_op::ArithmeticOperation
         result = add(x, y);
         println(" x = $x, y = $y, сумма = $result");
+
     elseif action == sub_op::ArithmeticOperation
         result = sub(x, y);
         println(" x = $x, y = $y, разность = $result");
+
     else action == avg_op::ArithmeticOperation
         result = avg(x, y);
         println(" x = $x, y = $y, среднее арифметическое = $result");
     end;
 
-catch
-    println("Ошибка при вводе выбора");
-    quit()
+catch e
+    if isa(e, ArgumentError)
+       println(e.msg)
+   end;
 end;
