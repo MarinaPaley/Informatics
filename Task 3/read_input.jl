@@ -1,5 +1,7 @@
 function read_input(message)
-    println(message);
+    if (message != nothing)
+        println(message);
+    end;
     result = readline();
     return result;
 end;
